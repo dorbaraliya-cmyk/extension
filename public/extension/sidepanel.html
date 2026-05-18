@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #0D1B4B; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+    #loading {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; background: #0D1B4B; color: #4ECDB4;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+    }
+    .spinner {
+      width: 24px; height: 24px;
+      border: 2px solid rgba(78,205,180,0.3);
+      border-top-color: #4ECDB4;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="spinner"></div>
+    <span>Loading DealHub Assistant…</span>
+  </div>
+  <iframe id="app" allow="clipboard-write" style="opacity:0;transition:opacity 0.3s"></iframe>
+  <script src="sidepanel.js"></script>
+</body>
+</html>

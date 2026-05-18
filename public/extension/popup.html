@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 300px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #0D1B4B;
+    color: #fff;
+  }
+
+  .header {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo {
+    width: 32px; height: 32px;
+    background: #4ECDB4; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 13px; color: #0D1B4B; flex-shrink: 0;
+  }
+  .title { font-size: 13px; font-weight: 700; }
+  .subtitle { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+
+  .body { padding: 14px 16px; }
+
+  .field-group { margin-bottom: 12px; }
+  .field-label {
+    display: block; font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.5); margin-bottom: 5px;
+  }
+  .field-input {
+    width: 100%; padding: 7px 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px; color: #fff; font-size: 12px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .field-input:focus { border-color: #4ECDB4; }
+  .field-input::placeholder { color: rgba(255,255,255,0.3); }
+
+  .status {
+    font-size: 12px; padding: 9px 12px; border-radius: 6px;
+    margin-bottom: 10px; line-height: 1.5;
+  }
+  .status.ok  { background: rgba(78,205,180,0.15); border: 1px solid rgba(78,205,180,0.3); color: #4ECDB4; }
+  .status.warn{ background: rgba(255,171,0,0.15);  border: 1px solid rgba(255,171,0,0.3);  color: #FFAB00; }
+  .status.err { background: rgba(222,53,11,0.15);  border: 1px solid rgba(222,53,11,0.3);  color: #FF7452; }
+
+  .cookies { margin-bottom: 10px; display: flex; flex-direction: column; gap: 5px; }
+  .cookie-row {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 11px; color: rgba(255,255,255,0.7);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot.found   { background: #4ECDB4; }
+  .dot.missing { background: #FF7452; }
+
+  .btn {
+    width: 100%; padding: 10px; border: none; border-radius: 6px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: opacity 0.15s; display: flex; align-items: center; justify-content: center;
+  }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary { background: #4ECDB4; color: #0D1B4B; margin-bottom: 8px; }
+  .btn-primary:hover:not(:disabled) { background: #37B09A; }
+  .btn-ghost { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); font-size: 12px; }
+  .btn-ghost:hover:not(:disabled) { background: rgba(255,255,255,0.12); }
+
+  .spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(13,27,75,0.3); border-top-color: #0D1B4B;
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+    display: inline-block; margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="logo">DH</div>
+  <div>
+    <div class="title">DealHub Assistant</div>
+    <div class="subtitle">Connect with one click</div>
+  </div>
+</div>
+<div class="body" id="body">
+  <div class="status warn">Loading…</div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>

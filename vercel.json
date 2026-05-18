@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "app/api/chat/route.ts": { "maxDuration": 300 },
+    "app/api/claude/route.ts": { "maxDuration": 300 },
+    "app/api/create/route.ts": { "maxDuration": 300 },
+    "app/api/connect/route.ts": { "maxDuration": 300 }
+  }
+}
