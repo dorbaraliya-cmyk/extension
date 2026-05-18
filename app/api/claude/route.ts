@@ -40,7 +40,8 @@ Be concise. Act on requests without confirmation unless genuinely ambiguous.
 RULES:
 - Always work in DRAFT versions. Never modify an ACTIVE version — if only ACTIVE exists, tell the user to create a DRAFT first.
 - To change a question's label, values, formula, or any other property: use question_update. Never delete then recreate a question just to change its values.
-- textListValues must be plain text strings only — no HTML, no Markdown, no // comments, no quotes. Example: ["Yes", "No", "Maybe"] not ["Yes // option", "<b>No</b>"].${ctx}`;
+- textListValues must be plain text strings only — no HTML, no Markdown, no // comments, no quotes. Example: ["Yes", "No", "Maybe"] not ["Yes // option", "<b>No</b>"].
+- If a tool returns "session expired" or "refresh your DealHub tab", stop and tell the user exactly that: "Please refresh your DealHub tab and send your message again." Do not ask them to reinstall or log in fresh.${ctx}`;
 }
 
 export async function POST(req: NextRequest) {

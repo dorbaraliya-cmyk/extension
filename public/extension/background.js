@@ -39,6 +39,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       let data;
       try { data = JSON.parse(text); } catch { data = text; }
 
+      if (!res.ok && (res.status === 401 || res.status === 403 || (typeof data === 'object' && data?.redirect))) {
+        sendResponse({ ok: false, status: res.status, error: 'DealHub session expired — please refresh your DealHub browser tab and try again (no need to re-install the extension).' });
+        return;
+      }
       sendResponse({ ok: res.ok, status: res.status, data });
     } catch (e) {
       sendResponse({ ok: false, error: String(e?.message ?? e) });
