@@ -15,7 +15,11 @@ Chrome extension + Vercel app that lets DealHub admins configure playbooks via n
 
 ## Pre-reading (load before DealHub work)
 - [DealHub Concepts](references/dealhub-concepts.md) — versions, playbooks, groups, questions, rules
-- [API Patterns](references/api-patterns.md) — known endpoints, request/response shapes, gotchas
+- [Formula & Rules Guide](references/formula-rules-guide.md) — critical: four expression contexts, syntax rules, no-nesting, dateAttributeValueType
+- [Playbook Design Principles](references/playbook-design-principles.md) — BSDM, baseline structure, group rules, brownfield discipline
+- [API Patterns](references/api-patterns.md) — known endpoints, request/response shapes, save gotchas
+- [Advanced APIs](references/advanced-apis.md) — approval workflows, submit validation, external queries, volume discounts, subscriptions
+- [Skills Index](references/skills-index.md) — what each build skill does, when to use it
 - [Extension Architecture](references/extension-architecture.md) — how the extension, iframe, and background.js connect
 - [Tool Reference](references/tool-reference.md) — all Claude tools, what they do, when to use each
 
