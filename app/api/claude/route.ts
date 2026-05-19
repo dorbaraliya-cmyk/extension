@@ -26,12 +26,17 @@ const TOOLS: Anthropic.Tool[] = [
   { name: 'playbook_save', description: 'Persist the loaded playbook back to DealHub. Always call after mutations.', input_schema: { type: 'object', properties: {}, required: [] } },
 ];
 
-function buildSystem(baseUrl?: string, versionGuid?: string, versionName?: string, tabUrl?: string) {
+function buildSystem(baseUrl?: string, versionGuid?: string, versionName?: string, tabUrl?: string, playbookGuid?: string, playbookName?: string) {
   const ctx = versionGuid
-    ? `\n\n**Active context:** Tenant: ${baseUrl ?? 'unknown'} · Version: ${versionName ?? 'unknown'} (GUID: ${versionGuid})\nUse this version GUID automatically when listing/loading playbooks.`
+    ? `\n\n**Active context:** Tenant: ${baseUrl ?? 'unknown'} · Version: ${versionName ?? 'unknown'} (GUID: ${versionGuid})`
     : '';
-  const tabCtx = tabUrl
-    ? `\n**Current tab URL:** ${tabUrl}\nIf this URL contains a playbook GUID (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx pattern), the playbook is already pre-loaded in memory — call playbook_summary immediately instead of playbook_load.`
+  const pbCtx = playbookName
+    ? `\n**Playbook already loaded:** "${playbookName}" (GUID: ${playbookGuid}) — call playbook_summary directly, do NOT call list_versions/list_playbooks/playbook_load.`
+    : versionGuid
+    ? `\n**No playbook loaded yet.** Call list_playbooks with versionGuid "${versionGuid}", pick the most relevant playbook based on the user's request, load it — do NOT ask the user which playbook.`
+    : '';
+  const tabCtx = tabUrl && !playbookName
+    ? `\n**Current tab URL:** ${tabUrl} — extract any playbook GUID from this URL if present.`
     : '';
   return `You are a DealHub CPQ configuration assistant. Configure playbooks fast with minimal back-and-forth.
 
@@ -59,12 +64,14 @@ export async function POST(req: NextRequest) {
 
   (async () => {
     try {
-      const { messages, baseUrl, versionGuid, versionName, tabUrl } = await req.json() as {
+      const { messages, baseUrl, versionGuid, versionName, tabUrl, playbookGuid, playbookName } = await req.json() as {
         messages: Anthropic.MessageParam[];
         baseUrl?: string;
         versionGuid?: string;
         versionName?: string;
         tabUrl?: string;
+        playbookGuid?: string;
+        playbookName?: string;
       };
 
       const claude = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -72,7 +79,7 @@ export async function POST(req: NextRequest) {
       const response = await claude.messages.create({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 2048,
-        system: buildSystem(baseUrl, versionGuid, versionName, tabUrl),
+        system: buildSystem(baseUrl, versionGuid, versionName, tabUrl, playbookGuid, playbookName),
         tools: TOOLS,
         messages,
       });

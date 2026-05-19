@@ -600,10 +600,20 @@ export default function ChatPage() {
 
     try {
       while (true) {
+        const loadedPb = playbookRef.current[sessionId.current];
+        const claudeBody = JSON.stringify({
+          messages: history,
+          baseUrl,
+          versionGuid: selectedVersionGuid || undefined,
+          versionName: selectedVersion?.name,
+          tabUrl: urlParams?.tabUrl || undefined,
+          playbookGuid: loadedPb ? String(loadedPb.guid ?? '') : undefined,
+          playbookName: loadedPb ? String(loadedPb.name ?? '') : undefined,
+        });
         const res = await fetch('/api/claude', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: history, baseUrl, versionGuid: selectedVersionGuid || undefined, versionName: selectedVersion?.name, tabUrl: urlParams?.tabUrl || undefined }),
+          body: claudeBody,
         });
         if (!res.body) throw new Error('No response body');
 
